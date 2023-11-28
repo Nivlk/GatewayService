@@ -13,7 +13,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-public class GatewayApplication {
+public class
+GatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}

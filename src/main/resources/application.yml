@@ -1,12 +1,41 @@
 spring:
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       routes:
         - id: SecurityApplication
-          uri: jdbc:postgresql://taller.postgres.database.azure.com:5432/jwt_security/api/v1/users
+          uri: http://localhost:8080
           predicates:
             - Path=/api/v1/users/**
-            - Header=Authorization, Bearer.*
+          metadata:
+            cors:
+              allowedOrigins: "*"
+              allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - PATCH
+                - DELETE
+                - OPTIONS
+              allowedHeaders: "*"
+              maxAge: 30
+        - id: DemoApplication
+          uri: http://localhost:8087
+          predicates:
+            - Path=/car/**
+          metadata:
+            cors:
+              allowedOrigins: "*"
+              allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - PATCH
+                - DELETE
+                - OPTIONS
+              allowedHeaders: "*"
+              maxAge: 30
 management:
   endpoints:
     web:
